@@ -3,7 +3,7 @@ export const SITE = {
 	name: 'Brian Ebiyau',
 	title: 'Brian Ebiyau',
 	description:
-		'Ph.D. candidate in Electrical and Computer Engineering at Carnegie Mellon University and the University of Porto (CMU Portugal Dual Degree Program).',
+		'Ph.D. student in Electrical and Computer Engineering at Carnegie Mellon University and the University of Porto (CMU Portugal dual-degree program).',
 	email: 'bebiyau@andrew.cmu.edu',
 };
 
