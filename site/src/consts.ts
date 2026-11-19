@@ -82,5 +82,5 @@ export const TEACHING: Course[] = [
 // `title` is shown in bold, `detail` on the line below.
 export const SERVICE = [
 	{ title: 'Reviewer', detail: 'IEEE ITSC 2026' },
-	{ title: 'PhD in Education Student Organization', detail: 'CMU ECE Department, 2026' },
+	{ title: 'Member', detail: 'PhD in Education Student Organization (PESO), CMU ECE, 2026' },
 ];
