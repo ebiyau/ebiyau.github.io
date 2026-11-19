@@ -1,0 +1,152 @@
+:root {
+	--bg: #faf9f6;
+	--text: #1c1b19;
+	--subtle: #3d3b37;
+	--faint: #e6e2da;
+	--accent: #a4512f;
+
+	--serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+
+	--measure: 40rem;
+	--page: 62rem;
+	color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--bg: #141413;
+		--text: #ece8e1;
+		--subtle: #cdc9c1;
+		--faint: #2a2926;
+		--accent: #e08a62;
+		color-scheme: dark;
+	}
+}
+
+:root[data-theme='dark'] {
+	--bg: #141413;
+	--text: #ece8e1;
+	--subtle: #cdc9c1;
+	--faint: #2a2926;
+	--accent: #e08a62;
+	color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+	color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	scroll-behavior: smooth;
+	scroll-padding-top: 2rem;
+}
+
+body {
+	margin: 0;
+	transition: background-color 0.25s, color 0.25s;
+	background: var(--bg);
+	color: var(--text);
+	font-family: var(--serif);
+	font-size: 1.125rem;
+	line-height: 1.7;
+}
+
+main {
+	max-width: var(--page);
+	margin: 0 auto;
+	padding: 0 1.25rem 6rem;
+}
+
+h1,
+h2,
+h3 {
+	font-weight: 400;
+	line-height: 1.2;
+	letter-spacing: -0.01em;
+	text-wrap: balance;
+}
+
+h1 {
+	font-size: 1.85rem;
+	font-weight: 600;
+	margin: 0 0 0.75rem;
+}
+
+h2 {
+	font-size: 1.6rem;
+	margin: 2.5rem 0 0.75rem;
+}
+
+p {
+	margin: 0 0 1.1rem;
+	text-wrap: pretty;
+}
+
+a {
+	color: inherit;
+	text-decoration: underline;
+	text-decoration-color: var(--faint);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.2em;
+	transition: text-decoration-color 0.2s, color 0.2s;
+}
+
+a:hover {
+	text-decoration-color: var(--accent);
+}
+
+::selection {
+	background: var(--accent);
+	color: var(--bg);
+}
+
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+/* Visible only when focused with the keyboard */
+.skip-link {
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+	z-index: 10;
+	transform: translateY(-200%);
+	padding: 0.5rem 1rem;
+	background: var(--text);
+	color: var(--bg);
+	text-decoration: none;
+	border-radius: 4px;
+}
+
+.skip-link:focus {
+	transform: none;
+}
+
+/* Single-column pages (404) */
+.narrow {
+	max-width: var(--measure);
+	margin: 0 auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	main {
+		animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+	}
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+	}
+}

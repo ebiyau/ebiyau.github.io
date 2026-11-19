@@ -1,0 +1,19 @@
+# Private / third-party material — never publish
+cv/context/
+cv/archive/
+IMG_5628.JPG.jpeg
+
+# Generated
+site/node_modules/
+site/dist/
+site/.astro/
+
+# LaTeX build files
+*.aux
+*.log
+*.out
+*.synctex.gz
+
+# OS / editor
+.DS_Store
+.idea/

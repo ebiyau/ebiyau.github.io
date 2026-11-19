@@ -1,0 +1,113 @@
+---
+import { SITE, PUBLICATIONS } from '../consts';
+
+interface Props {
+	pub: (typeof PUBLICATIONS)[number];
+}
+
+const { pub } = Astro.props;
+const paperUrl = pub.links[0]?.href;
+---
+
+<li>
+	<p class="title">{paperUrl ? <a href={paperUrl}>{pub.title}</a> : pub.title}</p>
+	<p class="authors">
+		{
+			pub.authors.map((author, i) => (
+				<>
+					{author === SITE.name ? <strong>{author}</strong> : author}
+					{i < pub.authors.length - 1 && ', '}
+				</>
+			))
+		}
+	</p>
+	<p class="venue">
+		<em>{pub.venue}</em>, {pub.year}
+		{pub.note && <span class="note">{pub.note}</span>}
+	</p>
+	{
+		pub.links.length > 0 && (
+			<p class="links">
+				{pub.links.map((link) => (
+					<a href={link.href}>{link.label}</a>
+				))}
+			</p>
+		)
+	}
+</li>
+
+<style>
+	li {
+		padding: 1.25rem 0;
+		border-bottom: 1px solid var(--faint);
+	}
+
+	li:first-child {
+		padding-top: 0;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	/* A soft hint that the title is a link, visible in both themes */
+	.title a {
+		text-decoration-color: color-mix(in srgb, var(--text) 30%, transparent);
+	}
+
+	.title a:hover {
+		color: var(--accent);
+		text-decoration-color: var(--accent);
+	}
+
+	.title {
+		font-weight: 500;
+		line-height: 1.45;
+		margin-bottom: 0.3rem;
+	}
+
+	.authors,
+	.venue {
+		font-size: 1rem;
+		line-height: 1.55;
+	}
+
+	.venue {
+		color: var(--subtle);
+	}
+
+	.authors strong {
+		font-weight: 600;
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+	}
+
+	.note {
+		margin-left: 0.5rem;
+		padding: 0.05rem 0.45rem;
+		border: 1px solid var(--accent);
+		border-radius: 999px;
+		color: var(--accent);
+		font-size: 0.8rem;
+		font-weight: 500;
+		letter-spacing: 0.03em;
+		vertical-align: 0.1em;
+	}
+
+	.links {
+		margin-top: 0.5rem;
+		display: flex;
+		gap: 1rem;
+		font-size: 0.95rem;
+	}
+
+	.links a {
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.links a:hover {
+		text-decoration: underline;
+	}
+</style>

@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import portrait from '../assets/portrait.jpg';
+import { SITE, LINKS } from '../consts';
+---
+
+<aside>
+	<Image
+		src={portrait}
+		alt={`Portrait of ${SITE.name}`}
+		widths={[180, 360]}
+		sizes="(max-width: 720px) 150px, 180px"
+		loading="eager"
+		class="portrait"
+	/>
+	<ul class="links">
+		{
+			LINKS.map((link) => (
+				<li>
+					<a
+						href={link.href}
+						aria-label={link.label}
+						title={link.label}
+						rel={link.href.startsWith('http') ? 'me noopener' : undefined}
+					>
+						<Icon name={link.icon} />
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</aside>
+
+<style>
+	aside {
+		position: sticky;
+		top: 2rem;
+	}
+
+	.portrait {
+		display: block;
+		width: 180px;
+		height: 180px;
+		border-radius: 50%;
+		object-fit: cover;
+		object-position: 50% 52%;
+		margin-bottom: 1.25rem;
+		box-shadow: 0 0 0 1px var(--faint), 0 0 0 6px var(--bg), 0 0 0 7px var(--faint);
+	}
+
+	.links {
+		list-style: none;
+		margin: 0 0 0 -0.4rem;
+		padding: 0;
+		display: flex;
+		gap: 0.25rem;
+	}
+
+	.links a {
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: 50%;
+		color: var(--text);
+		transition: color 0.2s;
+	}
+
+	.links a:hover {
+		color: var(--accent);
+	}
+
+	@media (max-width: 720px) {
+		aside {
+			position: static;
+			text-align: center;
+		}
+		.portrait {
+			margin-inline: auto;
+			width: 150px;
+			height: 150px;
+		}
+		.links {
+			margin-left: 0;
+			justify-content: center;
+		}
+	}
+</style>

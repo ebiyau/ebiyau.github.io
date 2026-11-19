@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import Profile from '../components/Profile.astro';
+import Publication from '../components/Publication.astro';
+import { SITE, PUBLICATIONS, TEACHING, SERVICE } from '../consts';
+---
+
+<Base>
+	<div class="layout">
+		<Profile />
+
+		<div class="content">
+			<section id="about">
+				<h1>{SITE.name}</h1>
+				<p class="lede">
+					I'm a Ph.D. candidate in Electrical and Computer Engineering at Carnegie Mellon University.
+					I'm
+					co-advised by <a href="https://users.ece.cmu.edu/~agr/">Prof. Anthony Rowe</a> in the{' '}
+					<a href="https://wise.ece.cmu.edu/">WiseLab</a> at CMU and{' '}
+					<a href="https://www.inesctec.pt/en/people/jaime-cardoso">Prof. Jaime Cardoso</a> in the{' '}
+					<a href="https://vcmi.inesctec.pt/">Visual Computing and Machine Intelligence (VCMI)</a> group
+					at the University of Porto.
+				</p>
+				<p class="lede">
+					Previously, I completed my master's at CMU, where I worked with{' '}
+					<a href="https://africa.engineering.cmu.edu/about/contact/directory/bios/barros-joao.html"
+						>Prof. João Barros</a
+					>, and my undergraduate degree at Makerere University in
+					Kampala, Uganda.
+				</p>
+			</section>
+
+			<section id="research">
+				<h2>Research</h2>
+				<p class="lede">
+					My research lies at the intersection of sensing systems and perception models, with additional
+					interests in computer vision, particularly 4D capture and scene reconstruction. I actively
+					contribute to ongoing projects within the <a href="https://radarml.github.io/">RadarML</a> group
+					at CMU.
+				</p>
+			</section>
+
+			<section id="publications">
+				<h2>Publications</h2>
+				<ol class="pubs">
+					{PUBLICATIONS.map((pub) => <Publication pub={pub} />)}
+				</ol>
+			</section>
+
+			<section id="teaching">
+				<h2>Teaching</h2>
+				<ul class="rows">
+					{
+						TEACHING.map((item) => (
+							<li>
+								<span class="course">
+									<strong>{item.role}</strong>
+									{item.href ? <a href={item.href}>{item.course}</a> : <span>{item.course}</span>}
+								</span>
+								<span class="when">{item.term}</span>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+
+			<section id="service">
+				<h2>Service</h2>
+				<ul class="rows">
+					{
+						SERVICE.map((item) => (
+							<li>
+								<span class="course">
+									<strong>{item.title}</strong>
+									<span>{item.detail}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+
+		</div>
+	</div>
+</Base>
+
+<style>
+	.layout {
+		display: grid;
+		grid-template-columns: 220px minmax(0, 1fr);
+		gap: 4.5rem;
+		align-items: start;
+	}
+
+	.content {
+		max-width: var(--measure);
+	}
+
+	.content section + section {
+		margin-top: 3.5rem;
+	}
+
+	h2 {
+		font-weight: 600;
+		margin-top: 0;
+		margin-bottom: 1.25rem;
+	}
+
+	#about a,
+	#research a,
+	#teaching a {
+		text-decoration-color: var(--accent);
+	}
+
+	.lede {
+		font-size: 1.2rem;
+		line-height: 1.6;
+	}
+
+	.pubs {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.rows {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 1.1rem;
+	}
+
+	.rows li {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		font-size: 1.05rem;
+	}
+
+	.rows .course {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.5;
+	}
+
+	.rows strong {
+		font-weight: 500;
+	}
+
+	.when {
+		flex-shrink: 0;
+		font-size: 0.95rem;
+		font-variant-numeric: tabular-nums;
+	}
+
+	@media (max-width: 720px) {
+		.layout {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+	}
+</style>

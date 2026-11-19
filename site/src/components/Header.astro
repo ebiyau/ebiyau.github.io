@@ -1,0 +1,79 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { SITE } from '../consts';
+
+const nav = [
+	{ label: 'Research', href: '/#research' },
+	{ label: 'Publications', href: '/#publications' },
+	{ label: 'Teaching', href: '/#teaching' },
+	{ label: 'Service', href: '/#service' },
+];
+---
+
+<header>
+	<a href="/" class="name">{SITE.name}</a>
+	<div class="right">
+		<nav>
+			{
+				nav.map((item) => (
+					<a href={item.href}>{item.label}</a>
+				))
+			}
+		</nav>
+		<ThemeToggle />
+	</div>
+</header>
+
+<style>
+	header {
+		max-width: var(--page);
+		margin: 0 auto;
+		padding: 2rem 1.25rem 4rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem 2rem;
+		flex-wrap: wrap;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	.name {
+		font-size: 1.2rem;
+	}
+
+	.right {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+	}
+
+	nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 1.25rem;
+		font-size: 1rem;
+	}
+
+	nav a {
+		color: var(--text);
+		transition: color 0.2s;
+	}
+
+	nav a:hover {
+		color: var(--accent);
+	}
+
+	@media (max-width: 720px) {
+		header {
+			padding-bottom: 2.5rem;
+		}
+		.right {
+			width: 100%;
+			justify-content: space-between;
+			gap: 1rem;
+		}
+	}
+</style>

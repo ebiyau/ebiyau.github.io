@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+---
+
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+	<span class="sun"><Icon name="sun" /></span>
+	<span class="moon"><Icon name="moon" /></span>
+</button>
+
+<script>
+	const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+	button?.addEventListener('click', () => {
+		const root = document.documentElement;
+		const current =
+			root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+		const next = current === 'dark' ? 'light' : 'dark';
+		root.dataset.theme = next;
+		try {
+			localStorage.setItem('theme', next);
+		} catch {}
+	});
+</script>
+
+<style>
+	.theme-toggle {
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		padding: 0;
+		border: 1px solid var(--faint);
+		border-radius: 999px;
+		background: transparent;
+		color: var(--text);
+		cursor: pointer;
+		transition: color 0.2s, border-color 0.2s;
+	}
+
+	.theme-toggle:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	.theme-toggle span {
+		display: grid;
+	}
+
+	/* Show the icon for the theme you'd switch *to*. */
+	.sun {
+		display: none !important;
+	}
+
+	:global(:root[data-theme='dark']) .sun {
+		display: grid !important;
+	}
+	:global(:root[data-theme='dark']) .moon {
+		display: none !important;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .sun {
+			display: grid !important;
+		}
+		:global(:root:not([data-theme='light'])) .moon {
+			display: none !important;
+		}
+	}
+</style>

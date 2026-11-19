@@ -1,0 +1,93 @@
+---
+import '@fontsource-variable/newsreader/opsz.css';
+import '@fontsource-variable/newsreader/opsz-italic.css';
+import fontUrl from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2?url';
+import { getImage } from 'astro:assets';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import portrait from '../assets/portrait.jpg';
+import { SITE, LINKS } from '../consts';
+
+interface Props {
+	title?: string;
+	description?: string;
+	/** Keep the page out of search results (e.g. the 404 page). */
+	noindex?: boolean;
+}
+
+const { title, description = SITE.description, noindex = false } = Astro.props;
+const pageTitle = title ? `${title} — ${SITE.title}` : SITE.title;
+
+// Absolute URLs need `site` in astro.config.mjs; until it's set, these tags are skipped.
+const canonical = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const ogImage = await getImage({ src: portrait, width: 600, height: 600, fit: 'cover', format: 'jpg' });
+const ogImageUrl = Astro.site && !noindex ? new URL(ogImage.src, Astro.site).href : undefined;
+
+const person = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: SITE.name,
+	jobTitle: 'Ph.D. Candidate, Electrical and Computer Engineering',
+	email: `mailto:${SITE.email}`,
+	affiliation: [
+		{ '@type': 'CollegeOrUniversity', name: 'Carnegie Mellon University' },
+		{ '@type': 'CollegeOrUniversity', name: 'University of Porto' },
+	],
+	sameAs: LINKS.map((link) => link.href).filter((href) => href.startsWith('http')),
+	...(Astro.site && { url: Astro.site.href, image: ogImageUrl }),
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<script is:inline>
+			// Apply a saved theme before first paint to avoid a flash.
+			try {
+				const theme = localStorage.getItem('theme');
+				if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+			} catch {}
+		</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{pageTitle}</title>
+		<meta name="description" content={description} />
+		<meta name="author" content={SITE.name} />
+		<meta name="generator" content={Astro.generator} />
+		{canonical && <link rel="canonical" href={canonical} />}
+		{noindex && <meta name="robots" content="noindex" />}
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+		{Astro.site && <link rel="sitemap" href="/sitemap-index.xml" />}
+
+		<meta property="og:type" content="profile" />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
+		{canonical && <meta property="og:url" content={canonical} />}
+		{
+			ogImageUrl && (
+				<>
+					<meta property="og:image" content={ogImageUrl} />
+					<meta property="og:image:width" content="600" />
+					<meta property="og:image:height" content="600" />
+					<meta property="og:image:alt" content={`Portrait of ${SITE.name}`} />
+				</>
+			)
+		}
+		<meta name="twitter:card" content="summary" />
+
+		<script type="application/ld+json" set:html={JSON.stringify(person)} />
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Skip to content</a>
+		<Header />
+		<main id="main">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>
