@@ -17,3 +17,9 @@ site/.astro/
 # OS / editor
 .DS_Store
 .idea/
+.vscode/
+*.fls
+*.fdb_latexmk
+
+# Live-preview output (official build is Brian_Ebiyau_CV.pdf)
+cv/cv.pdf
