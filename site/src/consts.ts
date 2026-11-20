@@ -16,15 +16,18 @@ export const LINKS = [
 	{ label: 'LinkedIn', icon: 'linkedin', href: 'https://www.linkedin.com/in/brian-ebiyau/' },
 ];
 
-// Newest first. Optional `href` turns the text into a link.
-type NewsItem = { date: string; text: string; href?: string };
+// Newest first. Optional `link` turns the part of `text` matching `link.label` into a link.
+type NewsItem = { date: string; text: string; link?: { label: string; href: string } };
 
 export const NEWS: NewsItem[] = [
 	{ date: 'Aug 2026', text: 'Started my Ph.D. at Carnegie Mellon University and the University of Porto.' },
 	{
 		date: 'Jul 2024',
-		text: 'Won 1st place in both tracks of the ITU AI/ML in 5G Challenge on LLMs for telecom.',
-		href: 'https://zindi.world/competitions/specializing-large-language-models-for-telecom-networks/leaderboard',
+		text: 'Won 1st place in both tracks of the ITU AI/ML in 5G Challenge on specializing LLMs for telecom question answering.',
+		link: {
+			label: 'ITU AI/ML in 5G Challenge',
+			href: 'https://zindi.world/competitions/specializing-large-language-models-for-telecom-networks/leaderboard',
+		},
 	},
 ];
 

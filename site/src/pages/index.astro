@@ -37,7 +37,20 @@ import { SITE, NEWS, PUBLICATIONS, TEACHING, SERVICE } from '../consts';
 						NEWS.map((item) => (
 							<li>
 								<span class="when">{item.date}</span>
-								<span>{item.href ? <a href={item.href}>{item.text}</a> : item.text}</span>
+								<span>
+									{item.link
+										? (() => {
+												const [before, after] = item.text.split(item.link.label);
+												return (
+													<>
+														{before}
+														<a href={item.link.href}>{item.link.label}</a>
+														{after}
+													</>
+												);
+											})()
+										: item.text}
+								</span>
 							</li>
 						))
 					}
@@ -54,7 +67,7 @@ import { SITE, NEWS, PUBLICATIONS, TEACHING, SERVICE } from '../consts';
 					that implies for how, and at what stage of a model, the two sensors should be fused.
 				</p>
 				<p class="lede">
-					I’m also building an open-source implementation of Doppler-division MIMO for single-chip radars.
+					I’m also building an open-source implementation of Doppler-division MIMO with continuous chirping for single-chip radars.
 				</p>
 			</section>
 

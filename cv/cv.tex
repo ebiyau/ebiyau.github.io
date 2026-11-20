@@ -92,7 +92,7 @@ B.S., Electrical and Computer Engineering\par
 \section{Projects}
 \project{Face Anonymization for Stereo Video}{2026}
 \begin{itemize}
-  \item Built a face anonymization pipeline for a 100+ hour stereo video dataset ahead of public release, using
+  \item Built a face anonymization pipeline for a 100+ hour multi-modal dataset ahead of public release, using
         pose keypoints and stereo disparity to cover both camera views.
   \item Raised throughput 4$\times$ (67 to 269 fps) by running eight parallel workers per GPU, after benchmarking
         showed a single worker left the GPU encoder mostly idle.
@@ -111,8 +111,9 @@ B.S., Electrical and Computer Engineering\par
 \section{Work Experience}
 \project{Kin-Keepers \textmd{--- \textit{Intern}}}{Jul. 2021 -- Jul. 2022}
 \begin{itemize}
-  \item Built Alzheimer's screening models from speech transcripts using TF-IDF features and MLP/logistic
-        regression classifiers, reaching $\sim$80\% accuracy on DementiaBank.
+  \item Built Alzheimer's screening models fusing spectrograms and acoustic speech features, trained on DementiaBank.
+  \item Deployed them in \href{https://o2gventures.com/memorytest/}{ElderCHAT}, an online tool I built pairing speech
+        analysis with a digitized cognitive test.
 \end{itemize}
 
 % ---------------------------------------------------------------- Publications
