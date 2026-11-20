@@ -21,18 +21,6 @@ type NewsItem = { date: string; text: string; href?: string };
 
 export const NEWS: NewsItem[] = [
 	{ date: 'Aug 2026', text: 'Started my Ph.D. at Carnegie Mellon University and the University of Porto.' },
-	{ date: '2026', text: 'Reviewing for IEEE ITSC 2026.' },
-	{ date: 'May 2025', text: 'Completed my M.S. in Engineering Artificial Intelligence at CMU.' },
-	{
-		date: '2025',
-		text: '“Seeing the Threat” published at IEEE ICVES 2025.',
-		href: 'https://ieeexplore.ieee.org/abstract/document/11376493/',
-	},
-	{
-		date: '2025',
-		text: '“Eyes and Ears” published at IEEE ICIP 2025.',
-		href: 'https://ieeexplore.ieee.org/abstract/document/11084628/',
-	},
 	{
 		date: '2024',
 		text: 'Won 1st place in both tracks of the ITU AI/ML in 5G Challenge on LLMs for telecom.',
