@@ -9,31 +9,31 @@
 \usepackage{titlesec}
 \usepackage{needspace}
 \usepackage{etoolbox}
-% Never strand a section heading at the bottom of a page
-\pretocmd{\section}{\needspace{6\baselineskip}}{}{}
 \usepackage{enumitem}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[colorlinks, urlcolor=MidnightBlue, linkcolor=black]{hyperref}
 \hypersetup{
   pdftitle={Brian Ebiyau -- CV},
   pdfauthor={Brian Ebiyau},
-  pdfkeywords={mmWave radar, machine learning, computer vision, PyTorch, quantization, LLM fine-tuning},
+  pdfkeywords={mmWave radar, radar perception, DDM MIMO, machine learning, computer vision, PyTorch},
 }
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \linespread{1.08}
-\hyphenation{caregiver response}
 
 % Section headings: bold capitals with a rule underneath
 \titleformat{\section}{\large\bfseries}{}{0em}{\MakeUppercase}[\vspace{-0.6em}\rule{\linewidth}{0.6pt}]
 \titlespacing*{\section}{0pt}{1.5em}{0.7em}
+% Never strand a section heading at the bottom of a page (patched at \begin{document},
+% after hyperref has redefined \section)
+\AtBeginDocument{\pretocmd{\section}{\needspace{10\baselineskip}}{}{\PackageWarning{cv}{Could not patch section}}}
 
 \setlist[itemize]{leftmargin=1.5em, topsep=0.3em, itemsep=0.3em, parsep=0pt}
 
 % \project{Title}{Date}: a one-line heading, followed by bullets.
 % Plain lines (no tables) so applicant-tracking systems read dates next to their entries.
-\newcommand{\project}[2]{\needspace{4\baselineskip}\textbf{#1}\hfill #2\par}
+\newcommand{\project}[2]{\needspace{4\baselineskip}\textbf{#1}\hfill \mbox{#2}\par}
 
 % \pub{Title}{Link}{Venue}{Authors}
 \newcommand{\pub}[4]{\textbf{\href{#2}{\color{black}#1}}, #3\\ #4\par\vspace{0.6em}}
@@ -48,6 +48,7 @@
   \small
   Pittsburgh, PA \enspace|\enspace
   \href{mailto:bebiyau@andrew.cmu.edu}{bebiyau@andrew.cmu.edu} \enspace|\enspace
+  \href{https://ebiyau.github.io/}{ebiyau.github.io}\\[0.2em]
   \href{https://www.linkedin.com/in/brian-ebiyau/}{linkedin.com/in/brian-ebiyau} \enspace|\enspace
   \href{https://github.com/ebyau}{github.com/ebyau} \enspace|\enspace
   \href{https://scholar.google.com/citations?user=pZlE07AAAAAJ&hl=en}{Google Scholar}
@@ -55,73 +56,71 @@
 
 % ---------------------------------------------------------------- Research focus
 \section{Research Focus}
-Building toward foundation perception models that sense and understand the world through mmWave radar, to establish
-radar as a scalable, low-cost and robust complement or alternative to cameras and lidar for autonomous systems,
-robotics and smart environments. Seeking perception internships.
+Radar perception for autonomous systems: camera-radar fusion, foundational models,
+and DDM MIMO for single-chip radars. Seeking a Summer 2027 perception internship.
 
 % ---------------------------------------------------------------- Education
 \section{Education}
-\textbf{Carnegie Mellon University}, Ph.D., Electrical and Computer Engineering \hfill Aug. 2026 -- Expected 2031\par
-Advisors: Anthony Rowe, Jaime Cardoso\par\vspace{0.45em}
-\textbf{Carnegie Mellon University}, M.S., Engineering Artificial Intelligence \hfill 2023 -- 2025\par\vspace{0.45em}
-\textbf{Makerere University}, B.S., Electrical and Computer Engineering \hfill 2017 -- 2022\par
-
-% ---------------------------------------------------------------- Skills
-\section{Skills}
-\textbf{Radar Perception \& Sensing:} 4D mmWave radar, radar signal processing, TDM/DDM MIMO systems\\[0.3em]
-\textbf{Machine Learning \& Foundation Models:} Deep learning, Transformers, foundation models, LoRA fine-tuning\\[0.3em]
-\textbf{Computer Vision \& Multimodal Perception:} Object detection and tracking, privacy-preserving vision systems\\[0.3em]
-\textbf{Signal Processing:} Range-Doppler-Angle processing, FFT-based analysis, CFAR detection, point cloud generation\\[0.3em]
-\textbf{Programming \& AI Frameworks:} Python, PyTorch
+\textbf{Carnegie Mellon University} \hfill \mbox{Aug. 2026 -- Expected 2031}\par
+Ph.D., Electrical and Computer Engineering. Advisor: Anthony Rowe\par\vspace{0.45em}
+\textbf{Carnegie Mellon University} \hfill \mbox{Aug. 2023 -- May 2025}\par
+M.S., Engineering Artificial Intelligence. Advisor: João Barros\par\vspace{0.45em}
+\textbf{Makerere University} \hfill \mbox{Aug. 2017 -- May 2022}\par
+B.S., Electrical and Computer Engineering\par
 
 % ---------------------------------------------------------------- Research experience
 \section{Research Experience}
-\project{RadarML Group, WiseLab, Carnegie Mellon University \textmd{--- \textit{Graduate Researcher}}}{Aug. 2026 -- Present}
+\project{WiseLab, Carnegie Mellon University}{Aug. 2026 -- Present}
 \begin{itemize}
-  \item Explored range-dependent tokenization of raw 4D radar for 3D occupancy prediction with WiseLab's
-        \href{https://wiselabcmu.github.io/grt/}{Generalizable Radar Transformer (GRT)}, allocating finer tokens to far
-        range; benchmarked against uniform patching on I/Q-1M.
-  \item Implementing Doppler-division multiplexing (DDM) MIMO in place of time-division
-        multiplexing (TDM) on the TI AWR1843AOP EVM, enabling simultaneous transmission from all
-        TX antennas.
+  \item Built \href{https://github.com/ebyau/awr1843-DDM/tree/raw-fw}{open-source DDM MIMO firmware} for the
+        TI AWR1843AOP radar, in which all transmitters send phase-coded chirps simultaneously instead of
+        taking turns as in TDM.
+  \item Showed that range-dependent tokenization of raw 4D radar underperforms uniform patching for 3D occupancy
+        prediction with a radar foundation model (\href{https://wiselabcmu.github.io/grt/}{GRT}) on the
+        \href{https://radarml.github.io/red-rover/iq1m/}{I/Q-1M} dataset.
 \end{itemize}
 \vspace{0.6em}
-\project{Mobile Edge AI Lab, Carnegie Mellon University Africa \textmd{--- \textit{Researcher}}}{2025 -- 2026}
+\project{Mobile Edge AI Lab, Carnegie Mellon University}{May 2025 -- May 2026}
 \begin{itemize}
-  \item Led the first large-scale study of driver responses to motorcycles in African urban traffic (36,658
-        encounters from 568 dashcam videos in Kigali; first author,
-        \href{https://ieeexplore.ieee.org/abstract/document/11376493/}{IEEE ICVES 2025}), identifying three behavioral
-        strategies and reaction-time baselines for ADAS/AV calibration.
+  \item Measured driver responses to motorcycles in Kigali traffic across 36,658 encounters from 568 dashcam
+        traces.
+  \item Identified three response strategies and reaction-time baselines for calibrating driver-assistance
+        systems.
 \end{itemize}
 
 % ---------------------------------------------------------------- Projects
 \section{Projects}
-\project{Stereo Face Anonymization for Multi-Camera Video}{2026}
+\project{Face Anonymization for Stereo Video}{2026}
 \begin{itemize}
-  \item Anonymized 100+ hours of multi-camera video for open research: localized faces from precomputed pose
-        keypoints in the left camera, projected them to the right via stereo disparity, and re-encoded videos with
-        metadata intact.
+  \item Built a face anonymization pipeline for a 100+ hour stereo video dataset ahead of public release, using
+        pose keypoints and stereo disparity to cover both camera views.
+  \item Raised throughput 4$\times$ (67 to 269 fps) by running eight parallel workers per GPU, after benchmarking
+        showed a single worker left the GPU encoder mostly idle.
 \end{itemize}
 \vspace{0.6em}
-\project{Domain Adaptation of Small LLMs for Telecom QA}{2024}
+\project{Small-LLM Question Answering on Telecom Standards}{2024}
 \begin{itemize}
-  \item Adapted Phi-2 for QA on 3GPP telecom standards using LoRA fine-tuning and context-response conditioning,
-        winning \href{https://zindi.world/competitions/specializing-large-language-models-for-telecom-networks/leaderboard}{\textbf{1st place among 50+ teams}} with 81.9\% accuracy; code and models are
+  \item Won \href{https://zindi.world/competitions/specializing-large-language-models-for-telecom-networks/leaderboard}{1st place in both tracks}
+        (Phi-2, Falcon-7B) of the ITU AI/ML in 5G Challenge among 130 active participants.
+  \item Reached 81.9\% accuracy on TeleQnA with a LoRA-tuned Phi-2 and ColBERT retrieval over 554 3GPP documents.
+  \item Released code and fine-tuned models as
         \href{https://github.com/Alexgichamba/itu_qna_challenge}{open source}.
 \end{itemize}
 
 % ---------------------------------------------------------------- Work experience
 \section{Work Experience}
-\project{Kin-Keepers, USA \textmd{--- \textit{Intern}}}{Jul. 2021 -- Jul. 2022}
+\project{Kin-Keepers \textmd{--- \textit{Intern}}}{Jul. 2021 -- Jul. 2022}
 \begin{itemize}
-  \item Developed Alzheimer's screening models from patient voice samples using TF-IDF features with
-        MLP and logistic regression, reaching $\sim$80\% accuracy on DementiaBank while
-        screening 5$\times$ faster than pen-and-paper tests.
+  \item Built Alzheimer's screening models from speech transcripts using TF-IDF features and MLP/logistic
+        regression classifiers, reaching $\sim$80\% accuracy on DementiaBank.
 \end{itemize}
 
 % ---------------------------------------------------------------- Publications
 \section{Publications}
-% ICVES paper omitted from Publications for now (linked from the Mobile Edge AI Lab bullet).
+\pub{Seeing the Threat: How Drivers React to Motorcycles in African City Traffic}
+    {https://ieeexplore.ieee.org/abstract/document/11376493/}
+    {IEEE ICVES 2025}
+    {\me, João Barros, Moise Busogi}
 \pub{Eyes and Ears: Automated Annotation of Audio Data Using Computer Vision}
     {https://ieeexplore.ieee.org/abstract/document/11084628/}
     {IEEE ICIP 2025}
@@ -132,19 +131,27 @@ Advisors: Anthony Rowe, Jaime Cardoso\par\vspace{0.45em}
     {Alex Gichamba, Tewodros Kederalah Idris, \me, Eric Nyberg, Teruko Mitamura}
 \vspace{-0.6em}
 
-% Honors & Awards omitted for now (see archive/cv-industry-v11.tex).
+% ---------------------------------------------------------------- Skills
+\section{Skills}
+\textbf{Radar:} FMCW mmWave radar, TDM and DDM MIMO, raw I/Q processing, TI single-chip radar firmware\\[0.3em]
+\textbf{Machine Learning:} Foundation models, PyTorch, LoRA fine-tuning, Retrieval-Augmented Generation (RAG)\\[0.3em]
+\textbf{Computer Vision:} Pose estimation, stereo geometry, GPU video pipelines\\[0.3em]
+\textbf{Languages and Tools:} Python, C, Docker
 
 % ---------------------------------------------------------------- Teaching
 \section{Teaching}
 \textbf{Teaching Assistant}, CMU 11-785 Introduction to Deep Learning \hfill Spring 2025\par\vspace{0.3em}
 \textbf{Guest Lecturer}, CMU 11-611 Natural Language Processing \hfill Fall 2024\par
 
+% ---------------------------------------------------------------- Coursework
+\section{Selected Coursework}
+Machine Learning for Radar, Computer Vision, Deep Learning
+
 % ---------------------------------------------------------------- Service
 \section{Service}
 \textbf{Reviewer}, IEEE International Conference on Intelligent Transportation Systems (ITSC) \hfill 2026\par\vspace{0.3em}
-\textbf{Member}, Ph.D. in Education Student Organization (PESO), CMU ECE \hfill 2026\par
+\textbf{Member}, PhD in Education Student Organization (PESO), CMU ECE \hfill 2026\par
 
-% Selected coursework (removed for industry; restore if wanted):
-% Computer Vision, Deep Learning, Natural Language Processing, Radar Machine Learning
+% Honors & Awards omitted for now (see archive/cv-industry-v11.tex).
 
 \end{document}
