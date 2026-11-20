@@ -22,7 +22,7 @@ type NewsItem = { date: string; text: string; href?: string };
 export const NEWS: NewsItem[] = [
 	{ date: 'Aug 2026', text: 'Started my Ph.D. at Carnegie Mellon University and the University of Porto.' },
 	{
-		date: '2024',
+		date: 'Jul 2024',
 		text: 'Won 1st place in both tracks of the ITU AI/ML in 5G Challenge on LLMs for telecom.',
 		href: 'https://zindi.world/competitions/specializing-large-language-models-for-telecom-networks/leaderboard',
 	},
