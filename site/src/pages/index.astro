@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Profile from '../components/Profile.astro';
 import Publication from '../components/Publication.astro';
-import { SITE, PUBLICATIONS, TEACHING, SERVICE } from '../consts';
+import { SITE, NEWS, PUBLICATIONS, TEACHING, SERVICE } from '../consts';
 ---
 
 <Base>
@@ -28,6 +28,20 @@ import { SITE, PUBLICATIONS, TEACHING, SERVICE } from '../consts';
 					>, where I studied how drivers in African cities respond to informal transport modes. My
 					undergraduate degree is from Makerere University in Kampala.
 				</p>
+			</section>
+
+			<section id="news">
+				<h2>News</h2>
+				<ul class="news">
+					{
+						NEWS.map((item) => (
+							<li>
+								<span class="when">{item.date}</span>
+								<span>{item.href ? <a href={item.href}>{item.text}</a> : item.text}</span>
+							</li>
+						))
+					}
+				</ul>
 			</section>
 
 			<section id="research">
@@ -110,9 +124,30 @@ import { SITE, PUBLICATIONS, TEACHING, SERVICE } from '../consts';
 	}
 
 	#about a,
+	#news a,
 	#research a,
 	#teaching a {
 		text-decoration-color: var(--accent);
+	}
+
+	.news {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.6rem;
+		font-size: 1.05rem;
+		line-height: 1.5;
+	}
+
+	.news li {
+		display: grid;
+		grid-template-columns: 5.5rem minmax(0, 1fr);
+		gap: 1rem;
+	}
+
+	.news .when {
+		color: var(--subtle);
 	}
 
 	.lede {

@@ -6,6 +6,7 @@ import { getImage } from 'astro:assets';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ScrollProgress from '../components/ScrollProgress.astro';
 import portrait from '../assets/portrait.jpg';
 import { SITE, LINKS } from '../consts';
 
@@ -84,6 +85,7 @@ const person = {
 		<script type="application/ld+json" set:html={JSON.stringify(person)} />
 	</head>
 	<body>
+		<ScrollProgress />
 		<a class="skip-link" href="#main">Skip to content</a>
 		<Header />
 		<main id="main">

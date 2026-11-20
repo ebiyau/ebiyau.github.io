@@ -1,9 +1,17 @@
 ---
 import { SITE } from '../consts';
+
+// The site is rebuilt on every push, so the build date is when it last changed.
+// Dates use Pittsburgh time; the build server runs on UTC, which is a day ahead in the evening.
+const built = new Date();
+const timeZone = 'America/New_York';
+const updated = built.toLocaleDateString('en-US', { timeZone, year: 'numeric', month: 'long', day: 'numeric' });
+const isoDate = built.toLocaleDateString('en-CA', { timeZone }); // YYYY-MM-DD
 ---
 
 <footer>
-	<span>© {new Date().getFullYear()} {SITE.name}</span>
+	<span>© {isoDate.slice(0, 4)} {SITE.name}</span>
+	<span>Last updated <time datetime={isoDate}>{updated}</time></span>
 </footer>
 
 <style>

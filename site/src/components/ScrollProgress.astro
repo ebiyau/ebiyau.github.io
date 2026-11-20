@@ -1,0 +1,37 @@
+<!-- Thin bar along the top of the window that fills as the page is scrolled. -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<script>
+	const bar = document.querySelector<HTMLElement>('.scroll-progress');
+	if (bar) {
+		let queued = false;
+		const update = () => {
+			queued = false;
+			const max = document.documentElement.scrollHeight - innerHeight;
+			bar.style.transform = `scaleX(${max > 0 ? Math.min(scrollY / max, 1) : 0})`;
+		};
+		// Update at most once per frame, however often scroll events fire.
+		const queue = () => {
+			if (!queued) {
+				queued = true;
+				requestAnimationFrame(update);
+			}
+		};
+		addEventListener('scroll', queue, { passive: true });
+		addEventListener('resize', queue);
+		update();
+	}
+</script>
+
+<style>
+	.scroll-progress {
+		position: fixed;
+		inset: 0 0 auto;
+		z-index: 20;
+		height: 3px;
+		background: var(--accent);
+		transform: scaleX(0);
+		transform-origin: left;
+		pointer-events: none;
+	}
+</style>

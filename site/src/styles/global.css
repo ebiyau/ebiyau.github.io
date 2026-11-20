@@ -9,7 +9,15 @@
 
 	--measure: 40rem;
 	--page: 62rem;
+	/* Room for the pinned header, so sticky content and section jumps clear it. */
+	--header-offset: 6rem;
 	color-scheme: light dark;
+}
+
+@media (max-width: 720px) {
+	:root {
+		--header-offset: 2rem;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,7 +55,7 @@ html {
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	scroll-behavior: smooth;
-	scroll-padding-top: 2rem;
+	scroll-padding-top: var(--header-offset);
 }
 
 body {

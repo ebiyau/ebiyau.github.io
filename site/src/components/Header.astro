@@ -3,6 +3,7 @@ import ThemeToggle from './ThemeToggle.astro';
 import { SITE } from '../consts';
 
 const nav = [
+	{ label: 'News', href: '/#news' },
 	{ label: 'Research', href: '/#research' },
 	{ label: 'Publications', href: '/#publications' },
 	{ label: 'Teaching', href: '/#teaching' },
@@ -11,24 +12,87 @@ const nav = [
 ---
 
 <header>
-	<a href="/" class="name">{SITE.name}</a>
-	<div class="right">
-		<nav>
-			{
-				nav.map((item) => (
-					<a href={item.href}>{item.label}</a>
-				))
-			}
-		</nav>
-		<ThemeToggle />
+	<div class="inner">
+		<a href="/" class="name">{SITE.name}</a>
+		<div class="right">
+			<nav>
+				{
+					nav.map((item) => (
+						<a href={item.href}>{item.label}</a>
+					))
+				}
+			</nav>
+			<ThemeToggle />
+		</div>
 	</div>
 </header>
 
+<script>
+	// Highlight the menu item for the section currently being read.
+	const links = [...document.querySelectorAll<HTMLAnchorElement>('header nav a[href^="/#"]')];
+	const sections = links
+		.map((link) => document.getElementById(link.hash.slice(1)))
+		.filter((section): section is HTMLElement => section !== null);
+
+	if (sections.length > 0) {
+		// The section last jumped to from the menu (or the page URL).
+		let chosen = location.hash.slice(1);
+		for (const link of links) link.addEventListener('click', () => (chosen = link.hash.slice(1)));
+
+		const isVisible = (el: HTMLElement) => {
+			const { top, bottom } = el.getBoundingClientRect();
+			return top < innerHeight && bottom > 0;
+		};
+
+		let queued = false;
+		const update = () => {
+			queued = false;
+			const atBottom = innerHeight + scrollY >= document.documentElement.scrollHeight - 2;
+			// The current section is the last one whose top has passed a line 30% down the window.
+			// The last sections are short and can never reach that line, so at the very bottom use
+			// the section jumped to, if it is on screen, or else the last section.
+			let current: HTMLElement | undefined;
+			if (atBottom) {
+				const target = sections.find((section) => section.id === chosen);
+				current = target && isVisible(target) ? target : sections.at(-1);
+			} else {
+				for (const section of sections) {
+					if (section.getBoundingClientRect().top <= innerHeight * 0.3) current = section;
+				}
+			}
+			for (const link of links) {
+				if (current && link.hash === `#${current.id}`) link.setAttribute('aria-current', 'location');
+				else link.removeAttribute('aria-current');
+			}
+		};
+		const queue = () => {
+			if (!queued) {
+				queued = true;
+				requestAnimationFrame(update);
+			}
+		};
+		addEventListener('scroll', queue, { passive: true });
+		addEventListener('resize', queue);
+		update();
+	}
+</script>
+
 <style>
+	/* Pinned to the top on wider screens so the menu, and its highlight, stay visible.
+	   Padding plus margin keep the same 2rem above and 4rem below as before. */
 	header {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		margin: 1rem 0 3rem;
+		background: var(--bg);
+		transition: background-color 0.25s;
+	}
+
+	.inner {
 		max-width: var(--page);
 		margin: 0 auto;
-		padding: 2rem 1.25rem 4rem;
+		padding: 1rem 1.25rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -62,13 +126,16 @@ const nav = [
 		transition: color 0.2s;
 	}
 
-	nav a:hover {
+	nav a:hover,
+	nav a[aria-current] {
 		color: var(--accent);
 	}
 
+	/* On phones the header wraps to two rows, too tall to keep on screen. */
 	@media (max-width: 720px) {
 		header {
-			padding-bottom: 2.5rem;
+			position: static;
+			margin-bottom: 1.5rem;
 		}
 		.right {
 			width: 100%;
